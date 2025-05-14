@@ -1,32 +1,39 @@
 import { Request, Response } from 'express';
 import Message from '../models/Message';
+import { caesarCipher } from '../utils/caesarCipher';
 
-export const decrypt = async (req: Request, res: Response) => {
-    const { encryptedText, hash } = req.body;
+export const decrypt = async (req: Request, res: Response): Promise<void> => {
+  const { encryptedText, hash } = req.body;
 
-    if (!encryptedText || !hash) {
-        res.status(400).send({ error: 'Texto criptografado e chave são obrigatórios.' });
-        return;
-    }
-    const message = await messageExists(hash)
+  if (!encryptedText || !hash) {
+    res.status(400).json({ error: 'Texto criptografado e hash são obrigatórios.' });
+    return;
+  }
 
-    if (message) {
+  const message = await messageExists(hash)
 
-        const shift = message.shift
+  if (!message) {
+    res.status(404).json({ error: 'Hash não encontrado.' });
+    return;
+  }
 
-        // Lógica de descriptografia (exemplo simples)
-        const decryptedText = encryptedText.split('').map((char: string) => {
-            return String.fromCharCode(char.charCodeAt(0) - shift);
-        }).join('');
+  if (message.used) {
+    res.status(400).json({ error: 'Este mensagem já foi decifrada' });
+    return;
+  }
 
-        res.status(200).send({ decryptedText });
-    }
-    else{
-        res.status(404).send({error: "Hash não existente"})
-    }
+  // Realiza a descriptografia
+  const decryptedText = caesarCipher(encryptedText, - message.shift);
+
+  //Marca o hash como usado
+  message.used = true;
+  await message.save();
+
+  res.json({ decryptedText });
+
+
 };
 
-
 const messageExists = async (hash: string) => {
-    return await Message.findOne({ hash })
+  return await Message.findOne({ hash })
 }
