@@ -9,9 +9,9 @@ class User {
     public password: string
 
 
-    constructor(email: string, senha: string) {
+    constructor(email: string, password: string) {
         this.email = email
-        this.password = senha
+        this.password = password
     }
 }
 
