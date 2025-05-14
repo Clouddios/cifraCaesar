@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { decrypt } from '../controllers/decryptController';
+import { decrypt } from '../controllers/Decrypt';
 
 const router = Router();
 router.post('/', decrypt);

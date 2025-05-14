@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { encrypt } from '../controllers/encryptController';
+import { encrypt } from '../controllers/Encrypt';
 
 const router = Router();
 router.post('/', encrypt);
