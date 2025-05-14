@@ -2,11 +2,9 @@ import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 
-import authRoutes from './routes/authRoutes';
 import encryptRoutes from './routes/encryptRoutes';
 import decryptRoutes from './routes/decryptRoutes';
 
-// Carrega as variáveis de ambiente do arquivo .env
 dotenv.config();
 
 const app = express();
@@ -26,7 +24,7 @@ mongoose
 // Middleware para interpretar JSON
 app.use(express.json());
 
-app.use('/auth', authRoutes);
+// Rotas
 app.use('/encrypt', encryptRoutes);
 app.use('/decrypt', decryptRoutes);
 

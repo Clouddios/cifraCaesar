@@ -1,15 +1,16 @@
-import { Schema, model, Document } from 'mongoose';
+import { getModelForClass, prop } from '@typegoose/typegoose';
 
-export interface IMessage extends Document {
-  hash: string;
-  shift: number;
-  used: boolean;
+class Message {
+  @prop({ required: true })
+  public hash!: string;
+
+  @prop({ required: true })
+  public shift!: number;
+
+  @prop({ required: true, default: false })
+  public used!: boolean;
 }
 
-const MessageSchema = new Schema<IMessage>({
-  hash: { type: String, unique: true, required: true },
-  shift: { type: Number, required: true },
-  used: { type: Boolean, default: false },
-});
+const MessageModel = getModelForClass(Message);
 
-export default model<IMessage>('Message', MessageSchema);
+export default MessageModel;
