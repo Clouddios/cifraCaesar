@@ -1,11 +1,12 @@
 export const caesarCipher = (text: string, shift: number): string => {
 
-  const list = text.toLowerCase().split("")
-  const alphabetStr = "abcdefghijklmnopqrstuvwxyz"
-  const alphabetList = alphabetStr.split("")
+  const alphabet = "abcdefghijklmnopqrstuvwxyz"
+
+  const ls = text.toLowerCase().split("")
+  const alphabetList = alphabet.split("")
   let result = ""
 
-  list.forEach((letter: string) => {
+  ls.forEach((letter: string) => {
     const letterLocationInAlphabet = alphabetList.findIndex((e) => e === letter)
     let encryptedLetterLocation = ((letterLocationInAlphabet + shift) % 26 + 26) % 26
 
