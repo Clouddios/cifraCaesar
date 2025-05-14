@@ -9,7 +9,6 @@ import decryptRoutes from './routes/decryptRoutes';
 import { autenticarToken } from './midddleware/Auth';
 import { errorHandler } from './midddleware/ErrorHandler';
 
-// Carrega as variáveis de ambiente do arquivo .env
 dotenv.config();
 
 const app = express();
