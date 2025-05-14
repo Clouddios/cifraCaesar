@@ -19,6 +19,7 @@
     "jsonwebtoken": "^9.0.2"
   },
   "scripts": {
-    "dev": "ts-node-dev src/app.ts"
+    "dev": "ts-node-dev src/app.ts",
+    "build": "tsc"
   }
 }
